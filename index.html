@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تطبيقي للتواصل</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #fdfaf5; display: flex; flex-direction: column; align-items: center; margin: 0; padding: 20px; }
+        h1 { color: #333; }
+        .grid-container { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; max-width: 500px; width: 100%; }
+        .card { background: white; border: 4px solid transparent; border-radius: 20px; padding: 20px; text-align: center; cursor: pointer; transition: 0.3s; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        .card img { width: 80px; height: 80px; margin-bottom: 10px; }
+        .card p { font-size: 24px; font-weight: bold; margin: 0; }
+        .card.hunger { border-color: #ffcc80; }
+        .card.thirst { border-color: #81c784; }
+        .card.toilet { border-color: #64b5f6; }
+        .card.sleep { border-color: #b39ddb; }
+        .card:active { transform: scale(0.95); background-color: #f0f0f0; }
+        .emergency-btn { background-color: #e53935; color: white; width: 100%; max-width: 500px; padding: 20px; border-radius: 15px; text-align: center; margin-top: 30px; font-size: 22px; font-weight: bold; cursor: pointer; border: none; }
+    </style>
+</head>
+<body>
+    <h1>تطبيقي للتواصل</h1>
+    <div class="grid-container">
+        <div class="card hunger" onclick="speak('أنا جائع، أريد الطعام')">
+            <img src="https://cdn-icons-png.flaticon.com/512/2927/2927347.png" alt="طعام">
+            <p>جوع</p>
+        </div>
+        <div class="card thirst" onclick="speak('أنا عطشان، أريد الماء')">
+            <img src="https://cdn-icons-png.flaticon.com/512/3100/3100566.png" alt="ماء">
+            <p>عطش</p>
+        </div>
+        <div class="card toilet" onclick="speak('أريد الذهاب إلى الحمام')">
+            <img src="https://cdn-icons-png.flaticon.com/512/2203/2203650.png" alt="حمام">
+            <p>حمام</p>
+        </div>
+        <div class="card sleep" onclick="speak('أنا متعب، أريد النوم')">
+            <img src="https://cdn-icons-png.flaticon.com/512/3094/3094833.png" alt="نوم">
+            <p>نوم</p>
+        </div>
+    </div>
+    <button class="emergency-btn" onclick="speak('ساعدني من فضلك، أحتاج للمساعدة الآن')">🔔 مساعدة عاجلة!</button>
+    <script>
+        function speak(text) {
+            let utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'ar-SA';
+            window.speechSynthesis.speak(utterance);
+        }
+    </script>
+</body>
+</html>

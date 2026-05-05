@@ -40,11 +40,31 @@
         </div>
     </div>
     <button class="emergency-btn" onclick="speak('ساعدني من فضلك، أحتاج للمساعدة الآن')">🔔 مساعدة عاجلة!</button>
-    <script>
-        function speak(text) {
-            let utterance = new SpeechSynthesisUtterance(text);
-            utterance.lang = 'ar-SA';
-            window.speechSynthesis.speak(utterance);
+<script>
+    function speak(text) {
+        // إلغاء أي عملية نطق سابقة لضمان عدم التداخل
+        window.speechSynthesis.cancel();
+
+        let utterance = new SpeechSynthesisUtterance(text);
+        
+        // محاولة اختيار أفضل صوت عربي متاح على الجهاز
+        let voices = window.speechSynthesis.getVoices();
+        let arabicVoice = voices.find(voice => voice.lang.includes('ar'));
+        
+        if (arabicVoice) {
+            utterance.voice = arabicVoice;
+        }
+        
+        utterance.lang = 'ar-SA';
+        utterance.pitch = 1; // درجة الصوت
+        utterance.rate = 0.9;  // سرعة الكلام (أبطأ قليلاً لتناسب الأطفال)
+        
+        window.speechSynthesis.speak(utterance);
+    }
+
+    // تنشيط الأصوات عند تحميل الصفحة (لبعض المتصفحات)
+    window.speechSynthesis.getVoices();
+</script>
         }
     </script>
 </body>

@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تطبيقي للتواصل - نسخة واقعية</title>
+    <title>مُسَاعِدِي الذَّكِيُّ</title>
     <style>
         body { 
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-            background-color: #f0f2f5; 
+            background-color: #f4f7f6; 
             display: flex; 
             flex-direction: column; 
             align-items: center; 
@@ -16,7 +16,7 @@
             user-select: none;
         }
 
-        h1 { color: #2c3e50; margin-bottom: 25px; font-size: 24px; }
+        h1 { color: #2c3e50; margin-bottom: 25px; font-size: 24px; text-align: center; }
 
         .grid-container { 
             display: grid; 
@@ -29,31 +29,32 @@
         .card { 
             background: white; 
             border-radius: 20px; 
-            overflow: hidden; /* لقص الصورة مع حواف الكرت */
+            overflow: hidden; 
             text-align: center; 
             cursor: pointer; 
-            transition: transform 0.2s; 
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            border: 3px solid white;
+            transition: transform 0.1s; 
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            border: 4px solid white;
         }
 
-        /* تنسيق الصور الواقعية */
+        /* تنسيق الصور لضمان ظهورها بشكل صحيح */
         .card img { 
             width: 100%; 
-            height: 150px; 
-            object-fit: cover; /* يجعل الصورة تملأ المساحة دون تشويه */
+            height: 140px; 
+            object-fit: cover;
+            display: block; /* لضمان عدم وجود مسافات غريبة */
         }
 
         .card p { 
             font-size: 22px; 
             font-weight: bold; 
-            margin: 15px 0; 
+            margin: 12px 0; 
             color: #333;
         }
 
-        .card:active { transform: scale(0.95); }
+        .card:active { transform: scale(0.95); background-color: #f9f9f9; }
 
-        /* تمييز الحواف بألوان هادئة */
+        /* ألوان الحواف */
         .hunger { border-color: #ff9f43; }
         .thirst { border-color: #48dbfb; }
         .toilet { border-color: #54a0ff; }
@@ -80,32 +81,32 @@
     <h1>مُسَاعِدِي الذَّكِيُّ</h1>
 
     <div class="grid-container">
-        <!-- جوع - صورة واقعية لخبز وفواكه -->
+        <!-- طعام -->
         <div class="card hunger" onclick="speak('أَنَا جَائِعٌ، أُرِيدُ أَنْ آكُلَ')">
-            <img src="https://images.unsplash.com/photo-1494390248081-4e521a5940db?auto=format&fit=crop&w=400&q=80" alt="طعام">
+            <img src="https://img.freepik.com/free-photo/delicious-sandwich-with-apples-table_23-2148290632.jpg" alt="طعام">
             <p>جُوع</p>
         </div>
 
-        <!-- عطش - صورة واقعية لكوب ماء صافي -->
+        <!-- ماء -->
         <div class="card thirst" onclick="speak('أَنَا عَطْشَانٌ، أُرِيدُ مَاءً')">
-            <img src="https://images.unsplash.com/photo-1548919973-5cfe5d4fc474?auto=format&fit=crop&w=400&q=80" alt="ماء">
+            <img src="https://img.freepik.com/free-photo/fresh-water-glass_144627-18305.jpg" alt="ماء">
             <p>عَطَش</p>
         </div>
 
-        <!-- حمام - صورة واقعية لحمام نظيف -->
+        <!-- حمام -->
         <div class="card toilet" onclick="speak('أُرِيدُ الذَّهَابَ إِلَى الْحَمَّامِ')">
-            <img src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=400&q=80" alt="حمام">
+            <img src="https://img.freepik.com/free-photo/view-modern-restroom-with-toilet_23-2150705642.jpg" alt="حمام">
             <p>حَمَّام</p>
         </div>
 
-        <!-- نوم - صورة واقعية لسرير مريح -->
+        <!-- نوم -->
         <div class="card sleep" onclick="speak('أَنَا مُتْعَبٌ، أُرِيدُ أَنْ أَنَامَ')">
-            <img src="https://images.unsplash.com/photo-1505691938895-1758d7eaa511?auto=format&fit=crop&w=400&q=80" alt="نوم">
+            <img src="https://img.freepik.com/free-photo/comfortable-bed-with-pillows-sheets_23-2148851053.jpg" alt="نوم">
             <p>نَوْم</p>
         </div>
     </div>
 
-    <button class="emergency-btn" onclick="speak('سَاعِدْنِي مِنْ فَضْلِكَ')">🔔 مُسَاعَدَة عاجلة!</button>
+    <button class="emergency-btn" onclick="speak('سَاعِدْنِي مِنْ فَضْلِكَ')">🔔 سَاعِدْنِي!</button>
 
     <script>
         let audioInitialized = false;
@@ -121,23 +122,16 @@
             window.speechSynthesis.cancel();
             const utterance = new SpeechSynthesisUtterance(text);
             
-            // محاولة العثور على صوت هادئ (صوت طبيعي)
-            const voices = window.speechSynthesis.getVoices();
-            // البحث عن صوت عربي "natural" أو محسن
-            const arabicVoice = voices.find(v => v.lang.includes('ar') && v.name.includes('Natural')) || 
-                               voices.find(v => v.lang.includes('ar'));
-
-            if (arabicVoice) utterance.voice = arabicVoice;
-
+            // ضبط اللغة والسرعة
             utterance.lang = 'ar-SA';
-            utterance.rate = 0.75; // سرعة هادئة وبطيئة تناسب الأطفال
-            utterance.pitch = 1.2; // رفع الطبقة قليلاً لتبدو أقرب لصوت طفل
+            utterance.rate = 0.7; // هادئ جداً
+            utterance.pitch = 1.3; // نبرة طفل
 
             window.speechSynthesis.speak(utterance);
         }
 
-        // تحميل الأصوات
-        window.speechSynthesis.onvoiceschanged = () => window.speechSynthesis.getVoices();
+        // تحميل المحرك
+        window.speechSynthesis.getVoices();
     </script>
 
 </body>
